@@ -62,7 +62,7 @@ export default function LoginPage() {
           <Button type="submit" className="w-full">Sign In</Button>
         </form>
         <div className="mt-4 text-center text-sm text-gray-500">
-           Use <b>admin@example.com</b> / <b>password123</b>
+           Use <b>admin@kaaj.com</b> / <b>admin123</b>
         </div>
       </div>
     </div>
