@@ -25,8 +25,13 @@ class UnderwritingService:
 
         # 3. Evaluate each Policy
         for policy in policies:
+            # Prepare evaluation data (Merge top-level fields with flexible data)
+            eval_data = application.data.copy()
+            eval_data["requested_amount"] = application.requested_amount
+            eval_data["business_name"] = application.business_name
+
             # Policy Engine Check
-            policy_result = self.policy_engine.evaluate_application(application.data, policy)
+            policy_result = self.policy_engine.evaluate_application(eval_data, policy)
             
             fit_score = 0.0
             status = "REJECTED"
@@ -34,7 +39,7 @@ class UnderwritingService:
             if policy_result.eligible:
                 status = "ELIGIBLE"
                 # Matching Engine Score
-                match_result = self.matching_engine.calculate_score(application.data, policy.program)
+                match_result = self.matching_engine.calculate_score(eval_data, policy.program)
                 fit_score = match_result.score
                 risk_tier = match_result.risk_tier
             else:

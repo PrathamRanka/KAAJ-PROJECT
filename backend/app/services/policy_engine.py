@@ -43,8 +43,9 @@ class PolicyEngine:
                 field_value = application_data.get(rule.field)
                 
                 if field_value is None:
+                    # Robustness: Treat missing data as a Fail, but explicitly say so
                     passed = False
-                    reason = f"Missing data for '{rule.field}'."
+                    reason = f"Data for '{rule.field.replace('_', ' ').title()}' was not provided."
                 else:
                     passed = self._evaluate_condition(field_value, rule.operator, rule.value_json)
                     

@@ -79,13 +79,6 @@ class ApplicationBase(BaseModel):
 class ApplicationCreate(ApplicationBase):
     pass
 
-class ApplicationRead(ApplicationBase):
-    id: int
-    status: str
-    class Config:
-        orm_mode = True
-
-# --- Decision Schemas ---
 class DecisionRead(BaseModel):
     id: int
     application_id: int
@@ -93,5 +86,18 @@ class DecisionRead(BaseModel):
     status: str
     fit_score: float
     reasons: Dict[str, Any]
+    
+    # We will inject program name via validator or just use nested ProgramRead
+    # Simple way: Pre-loading in query or Pydantic getter
+    program: Optional[ProgramRead] = None
+    
+    class Config:
+        orm_mode = True
+
+# --- Application Schemas (Updated) ---
+class ApplicationRead(ApplicationBase):
+    id: int
+    status: str
+    decisions: List[DecisionRead] = []
     class Config:
         orm_mode = True

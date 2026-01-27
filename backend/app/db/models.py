@@ -81,6 +81,8 @@ class Application(Base):
     
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    
+    decisions = relationship("Decision", back_populates="application", cascade="all, delete-orphan")
 
 class Decision(Base):
     __tablename__ = "decisions"
@@ -93,4 +95,7 @@ class Decision(Base):
     reasons = Column(JSON, nullable=True) # { "passed": [], "failed": [] }
     
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+    
+    application = relationship("Application", back_populates="decisions")
+    program = relationship("Program")
 

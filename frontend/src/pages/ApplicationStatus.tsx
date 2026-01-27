@@ -16,6 +16,20 @@ export default function ApplicationStatus() {
     enabled: !!id
   });
 
+  // Effect to load existing results on mount
+  React.useEffect(() => {
+    if (application?.decisions?.length > 0 && !underwritingResult) {
+      // Map backend Decision model to frontend display format
+      const formatted = application.decisions.map((d: any) => ({
+        program: d.program?.name || `Program #${d.program_id}`, // Handle missing program name safely
+        status: d.status,
+        score: d.fit_score,
+        reasons: d.reasons
+      }));
+      setUnderwritingResult(formatted);
+    }
+  }, [application]);
+
   const handleRunUnderwriting = async () => {
     setLoading(true);
     try {
