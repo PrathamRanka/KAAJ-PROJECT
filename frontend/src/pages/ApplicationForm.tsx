@@ -26,7 +26,7 @@ export default function ApplicationForm() {
           fico: Number(formData.fico),
           years_in_business: Number(formData.years_in_business),
           annual_revenue: Number(formData.annual_revenue),
-          industry: "General" # Placeholder
+          industry: "General" // Placeholder
         }
       };
       
