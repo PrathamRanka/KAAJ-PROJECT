@@ -22,7 +22,7 @@ class RuleRead(RuleBase):
     id: int
     policy_id: int
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 # --- Policy Schemas ---
 class PolicyBase(BaseModel):
@@ -38,7 +38,7 @@ class PolicyRead(PolicyBase):
     program_id: int
     rules: List[RuleRead]
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 # --- Program Schemas ---
 class ProgramBase(BaseModel):
@@ -53,7 +53,7 @@ class ProgramRead(ProgramBase):
     lender_id: int
     policies: List[PolicyRead] = [] 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 # --- Lender Schemas ---
 class LenderBase(BaseModel):
@@ -68,7 +68,7 @@ class LenderRead(LenderBase):
     id: int
     programs: List[ProgramRead] = []
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 # --- Application Schemas ---
 class ApplicationBase(BaseModel):
@@ -92,7 +92,7 @@ class DecisionRead(BaseModel):
     program: Optional[ProgramRead] = None
     
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 # --- Application Schemas (Updated) ---
 class ApplicationRead(ApplicationBase):
