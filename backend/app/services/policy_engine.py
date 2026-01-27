@@ -35,6 +35,7 @@ class PolicyEngine:
         """
         passed_rules = []
         failed_rules = []
+        suggestions = []
         is_eligible = True
 
         for rule in policy.rules:
@@ -70,17 +71,7 @@ class PolicyEngine:
                     # Generate Suggestion
                     suggestion = self._generate_suggestion(rule.field, rule.operator, rule.value_json)
                     if suggestion:
-                         # We'll attach it to the PolicyResult later, or maybe the RuleResult?
-                         # For now, let's keep it simple and just pass it out.
-                     # Compile suggestions
-        suggestions = []
-        for rule in policy.rules:
-             if rule.rule_type == "filter":
-                 val = application_data.get(rule.field)
-                 if val is not None and not self._evaluate_condition(val, rule.operator, rule.value_json):
-                     sugg = self._generate_suggestion(rule.field, rule.operator, rule.value_json)
-                     if sugg:
-                         suggestions.append(sugg)
+                         suggestions.append(suggestion)
 
         return PolicyResult(
             program_id=policy.program_id,
