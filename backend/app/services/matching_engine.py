@@ -30,16 +30,34 @@ class MatchingEngine:
         score += age_score
         breakdown['business_profile'] = age_score
 
-        # 3. Loan Fit (20% weight)
-        # Close to max amount is riskier? Or just purely based on range? 
-        # Let's simple simplistic: 20 points flat if eligible (since we filtered before).
-        loan_score = 20
+        # 3. Loan Fit (20% weight) - Capacity to Repay
+        # Ratio of Amount to Annual Revenue
+        revenue = application_data.get('annual_revenue', 1) or 1
+        amount = application_data.get('requested_amount', 0)
+        
+        # If accessing > 50% of revenue, score drops.
+        # Ideal: Amount is < 10% of revenue.
+        ratio = amount / revenue if revenue > 0 else 1.0
+        
+        if ratio <= 0.10:
+             loan_score = 20 # Excellent capacity
+        elif ratio <= 0.25:
+             loan_score = 15 # Good
+        elif ratio <= 0.50:
+             loan_score = 10 # Moderate risk
+        else:
+             loan_score = 5  # High leverage
+             
         score += loan_score
         breakdown['loan_fit'] = loan_score
 
         # 4. Risk Factors (10% weight)
-        # Placeholder
+        # Industry alignment preference (Mock logic)
+        industry = application_data.get('industry', 'General')
         risk_score = 10
+        if industry in ["Retail", "Restaurant"]:
+            risk_score = 5 # Higher volatility
+            
         score += risk_score
         breakdown['risk'] = risk_score
         
