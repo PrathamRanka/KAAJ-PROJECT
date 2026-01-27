@@ -4,6 +4,7 @@ from app.db.models import Lender, Program, Policy, Rule, RuleType, User
 from app.core.security import get_password_hash
 
 def seed_db():
+    Base.metadata.create_all(bind=engine)
     db = SessionLocal()
     
     # 1. Create Admin User
