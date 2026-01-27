@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { endpoints } from '../lib/api';
 import { Button } from '../components/Button';
-import { CheckCircle, XCircle, AlertCircle } from 'lucide-react';
+import { CheckCircle, XCircle} from 'lucide-react';
 
 export default function ApplicationStatus() {
   const { id } = useParams<{ id: string }>();
