@@ -35,55 +35,14 @@ Before running the application, ensure you have the following installed:
 
 ## Backend Setup
 
-1.  **Navigate to the backend directory:**
+For detailed backend documentation, including file structure, architecture explainers, and in-depth setup, please refer to the **[Backend README](backend/README.md)**.
 
-    ```bash
-    cd backend
-    ```
+### Quick Start
 
-2.  **Create a virtual environment (optional but recommended):**
-
-    ```bash
-    python -m venv venv
-
-    # Windows
-    .\venv\Scripts\activate
-
-    # macOS/Linux
-    source venv/bin/activate
-    ```
-
-3.  **Install dependencies:**
-
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-4.  **Configure Environment Variables:**
-    The application uses `app/core/config.py` for configuration. Ensure your PostgreSQL database is running. By default, it expects a database accessible at `postgresql://postgres:postgres@localhost/lender_db` (or user: `postgres`, password: `postgres`, db: `lender_platform`). You may need to create this database manually or update the connection string in `app/core/config.py`.
-
-5.  **Initialize the Database:**
-    To create the necessary tables and seed the database with initial data (including the admin user and sample lenders):
-
-    ```bash
-    # Windows (Powershell)
-    $env:PYTHONPATH="."; python scripts/seed.py
-
-    # Bash
-    export PYTHONPATH=. && python scripts/seed.py
-    ```
-
-    This script will create:
-    - Admin User: `admin@example.com` / `password123`
-    - Sample Lenders: Prime Bank, Fast Fintech
-    - Default Policies and Rules
-
-6.  **Run the Server:**
-    ```bash
-    uvicorn app.main:app --reload
-    ```
-    The API will be available at `http://localhost:8000`.
-    Interactive API documentation is available at `http://localhost:8000/docs`.
+1.  **Navigate to backend:** `cd backend`
+2.  **Install dependencies:** `pip install -r requirements.txt`
+3.  **Seed Database:** `python -m scripts.seed`
+4.  **Run Server:** `uvicorn app.main:app --reload`
 
 ## Frontend Setup
 

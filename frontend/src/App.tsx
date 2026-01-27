@@ -8,6 +8,8 @@ import LenderList from './pages/LenderList';
 import LenderDetail from './pages/LenderDetail';
 import LoginPage from './pages/LoginPage';
 import { AuthProvider, useAuth } from './hooks/useAuth';
+import { useQuery } from '@tanstack/react-query';
+import { endpoints } from './lib/api';
 
 const queryClient = new QueryClient();
 
@@ -51,13 +53,20 @@ function Layout({ children }: { children: React.ReactNode }) {
 }
 
 function Dashboard() {
+  const { data: applications } = useQuery({
+    queryKey: ['applications'],
+    queryFn: () => endpoints.getApplications().then((res) => res.data),
+  });
+
+  const applicationCount = applications?.length || 0;
+
   return (
     <div>
       <h2 className="text-2xl font-bold text-gray-900 mb-4">Dashboard</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
           <h3 className="text-gray-500 text-sm font-medium">Recent Applications</h3>
-          <p className="text-3xl font-bold mt-2">0</p>
+          <p className="text-3xl font-bold mt-2">{applicationCount}</p>
         </div>
       </div>
     </div>

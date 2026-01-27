@@ -15,6 +15,7 @@ export const endpoints = {
   // Applications
   createApplication: (data: any) => api.post('/applications/', data),
   getApplication: (id: number) => api.get(`/applications/${id}`),
+  getApplications: () => api.get('/applications/'),
   runUnderwriting: (id: number) => api.post(`/applications/${id}/run-underwriting`),
   
   // Rules
