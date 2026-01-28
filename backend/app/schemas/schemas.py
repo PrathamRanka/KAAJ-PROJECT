@@ -86,9 +86,6 @@ class DecisionRead(BaseModel):
     status: str
     fit_score: float
     reasons: Dict[str, Any]
-    
-    # We will inject program name via validator or just use nested ProgramRead
-    # Simple way: Pre-loading in query or Pydantic getter
     program: Optional[ProgramRead] = None
     
     class Config:

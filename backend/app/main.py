@@ -1,8 +1,8 @@
-from fastapi import FastAPI
+from fastapi import FastAPI #type: ignore
 from app.core.config import settings
 from app.core.database import engine, Base
 from app.api.endpoints import lenders, applications, auth
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.cors import CORSMiddleware #type: ignore
 
 
 Base.metadata.create_all(bind=engine)

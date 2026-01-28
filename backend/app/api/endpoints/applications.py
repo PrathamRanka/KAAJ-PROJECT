@@ -1,5 +1,5 @@
-from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
-from sqlalchemy.orm import Session
+from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks #type: ignore
+from sqlalchemy.orm import Session#type: ignore
 from typing import List, Any
 from app.core.database import get_db
 from app.db.models import Application
