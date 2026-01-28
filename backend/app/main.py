@@ -4,12 +4,11 @@ from app.core.database import engine, Base
 from app.api.endpoints import lenders, applications, auth
 from fastapi.middleware.cors import CORSMiddleware
 
-# Create Tables
+
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title=settings.PROJECT_NAME)
 
-# CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
