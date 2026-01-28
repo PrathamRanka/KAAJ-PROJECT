@@ -94,6 +94,38 @@ function Dashboard() {
   const completedCount = applications?.filter((a: any) => a.status === 'COMPLETED').length || 0;
   const totalVolume = applications?.reduce((acc: number, curr: any) => acc + (curr.requested_amount || 0), 0) || 0;
 
+  const downloadReport = () => {
+    if (!applications || applications.length === 0) {
+      alert('No applications to download');
+      return;
+    }
+
+    // Generate CSV content
+    const headers = ['ID', 'Business Name', 'Requested Amount', 'Status', 'Created Date'];
+    const csvRows = [
+      headers.join(','),
+      ...applications.map((app: any) => [
+        app.id,
+        `"${app.business_name}"`,
+        app.requested_amount,
+        app.status,
+        new Date(app.created_at || Date.now()).toLocaleDateString()
+      ].join(','))
+    ];
+    
+    const csvContent = csvRows.join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    
+    link.setAttribute('href', url);
+    link.setAttribute('download', `applications_report_${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const StatCard = ({ title, value, subtext, icon: Icon, color }: any) => (
     <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
       <div className="flex items-center justify-between mb-4">
@@ -115,7 +147,15 @@ function Dashboard() {
             <h2 className="text-2xl font-bold text-slate-900">Dashboard Overview</h2>
             <p className="text-slate-500">Welcome back, here's what's happening today.</p>
          </div>
-         <button className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium shadow-lg shadow-indigo-200 hover:bg-indigo-700 transition">Download Report</button>
+         <button 
+            onClick={downloadReport}
+            className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium shadow-lg shadow-indigo-200 hover:bg-indigo-700 transition flex items-center space-x-2"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            <span>Download Report</span>
+          </button>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
