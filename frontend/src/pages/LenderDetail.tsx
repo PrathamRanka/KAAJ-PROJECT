@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+// import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { endpoints } from '../lib/api';
-import { ScrollText, Gavel, ArrowLeft, Copy, Trash2, Edit2, Plus } from 'lucide-react';
+import { ScrollText, Gavel, ArrowLeft, Copy, Trash2, Plus } from 'lucide-react';
 
 export default function LenderDetail() {
   const { id } = useParams<{ id: string }>();
